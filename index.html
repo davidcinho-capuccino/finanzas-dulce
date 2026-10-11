@@ -9,7 +9,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Finanzas">
-<meta name="theme-color" content="#103B38">
+<meta name="theme-color" content="#5A1522">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="apple-touch-icon.png">
@@ -382,14 +382,16 @@ body.ini-on .sheet-h .back{min-width:44px;padding:0;font-size:26px;line-height:1
    false = versión real: se conecta a tu Apps Script con tu clave. */
 var DEMO = false;
 /* URL de tu Apps Script (termina en /exec) */
-var API = 'https://script.google.com/macros/s/AKfycbzs2WLowYukNF6lVC0J3QJtTqLYSfchVWhVJVCK6WU5MLuSnw5pLlvoktnQTDREAyeiEA/exec';
+var API = 'https://script.google.com/macros/s/AKfycbwOJN1eiRphs_5VdLDHYwyFm-D-RfLnSmfNrPH9ijggZuNmL7gWX2hK2W14-CGV_j1tcQ/exec';
 </script>
 <script>
 (function(){
   var VERSION = '2.0';
+  /* Cada app guarda su memoria aparte (tu app y la de tu hermana comparten dominio) */
+  var MEM = 'dulce:';
   var D = null, loadedAt = 0, KEY = DEMO ? 'demo' : leerClave(), cargando = false;
-  function guardar(k,v){ try{ localStorage.setItem(k,v) }catch(e){} }
-  function leer(k){ try{ return localStorage.getItem(k) }catch(e){ return null } }
+  function guardar(k,v){ try{ localStorage.setItem(MEM+k,v) }catch(e){} }
+  function leer(k){ try{ return localStorage.getItem(MEM+k) }catch(e){ return null } }
   // La clave viaja en el link después de #k= (esa parte nunca sale de tu iPhone)
   /* El link personal trae la clave (k) y, si es de otra persona, su Apps Script (s):
      .../finanzas/#k=CLAVE&s=ID_DEL_APPS_SCRIPT   (todo eso se queda en el equipo, nunca viaja a GitHub) */
@@ -407,7 +409,8 @@ var API = 'https://script.google.com/macros/s/AKfycbzs2WLowYukNF6lVC0J3QJtTqLYSf
     var o = leerLink(location.hash);
     // si el link es de otra persona, se borran los datos guardados del anterior
     if((o.k && o.k!==leer('clave')) || (o.s && o.s!==leer('script'))) guardar('datos','');
-    if(o.s){ guardar('script', o.s); }
+    // un link con clave pero sin &s= usa la hoja que trae este index (borra la que se haya guardado antes)
+    if(o.s){ guardar('script', o.s); } else if(o.k){ guardar('script', ''); }
     usarScript(o.s || leer('script'));
     if(o.k){ guardar('clave', o.k); return o.k; }
     return leer('clave');
@@ -1265,6 +1268,10 @@ var API = 'https://script.google.com/macros/s/AKfycbzs2WLowYukNF6lVC0J3QJtTqLYSf
   else $('app').innerHTML = '<div class="sk"></div><div class="sk"></div><div class="sk"></div>';
   refresh(true, false);
 })();
+</script>
+<script>
+/* Instalación como app en Android (Samsung, Chrome): guarda la app para abrir rápido */
+if('serviceWorker' in navigator && location.protocol==='https:'){ window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }
 </script>
 </body>
 </html>
