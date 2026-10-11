@@ -9,7 +9,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Finanzas">
-<meta name="theme-color" content="#5A1522">
+<meta name="theme-color" content="#103B38">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="apple-touch-icon.png">
@@ -382,7 +382,7 @@ body.ini-on .sheet-h .back{min-width:44px;padding:0;font-size:26px;line-height:1
    false = versión real: se conecta a tu Apps Script con tu clave. */
 var DEMO = false;
 /* URL de tu Apps Script (termina en /exec) */
-var API = 'PEGA_AQUI_LA_URL_DE_SU_APPS_SCRIPT';  /* o usa el link con &s=ID_DEL_SCRIPT */
+var API = 'https://script.google.com/macros/s/AKfycbzs2WLowYukNF6lVC0J3QJtTqLYSfchVWhVJVCK6WU5MLuSnw5pLlvoktnQTDREAyeiEA/exec';
 </script>
 <script>
 (function(){
@@ -1265,10 +1265,6 @@ var API = 'PEGA_AQUI_LA_URL_DE_SU_APPS_SCRIPT';  /* o usa el link con &s=ID_DEL_
   else $('app').innerHTML = '<div class="sk"></div><div class="sk"></div><div class="sk"></div>';
   refresh(true, false);
 })();
-</script>
-<script>
-/* Instalación como app en Android (Samsung, Chrome): guarda la app para abrir rápido */
-if('serviceWorker' in navigator && location.protocol==='https:'){ window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }
 </script>
 </body>
 </html>
